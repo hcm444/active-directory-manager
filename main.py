@@ -28,6 +28,18 @@ class ActiveDirectoryManager:
         except ldap.LDAPError as e:
             print("Failed to add user to Active Directory: ", e)
 
+    def modify_user(self, dn, attributes):
+        try:
+            self.conn.modify_s(dn, attributes)
+        except ldap.LDAPError as e:
+            print("Failed to modify user in Active Directory: ", e)
+
+    def delete_user(self, dn):
+        try:
+            self.conn.delete_s(dn)
+        except ldap.LDAPError as e:
+            print("Failed to delete user from Active Directory: ", e)
+
 if __name__ == "__main__":
     ad = ActiveDirectoryManager("ldap://localhost:389", "cn=admin,dc=example,dc=com", "secret")
     ad.connect()
